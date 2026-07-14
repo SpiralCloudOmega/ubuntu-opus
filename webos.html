@@ -368,7 +368,7 @@ const DEFAULT_STATE={
   settings:{theme:'dark',accent:'blue',wallpaper:'breeze',volume:70,user:'Astra Nova'},
 };
 const STATE_KEY='ubuntustudio_plasma_v3';
-const OLD_STATE_KEYS=['ubuntustudio_plasma_v1','ubuntuweb_v2'];
+const OLD_STATE_KEYS=['ubuntuweb_v2'];
 let STATE=load();
 function load(){try{
   const raw=localStorage.getItem(STATE_KEY)||OLD_STATE_KEYS.map(k=>localStorage.getItem(k)).find(Boolean);
@@ -381,7 +381,7 @@ function save(){localStorage.setItem(STATE_KEY,JSON.stringify(STATE));}
 
 /* ---- Virtual filesystem ---- */
 const FS_KEY='ubuntustudio_plasma_fs_v3';
-const OLD_FS_KEYS=['ubuntustudio_plasma_fs_v1','ubuntuweb_fs_v2'];
+const OLD_FS_KEYS=['ubuntuweb_fs_v2'];
 function defaultFS(){
   return {type:'dir',children:{
     home:{type:'dir',children:{
@@ -1348,8 +1348,8 @@ function appHelp(){
     body.style.overflow='auto';body.style.padding='30px';body.style.background='var(--win-bg)';body.style.lineHeight='1.7';
     body.innerHTML=`
       <div style="text-align:center;margin-bottom:24px">
-        <div style="width:80px;height:80px;margin:0 auto 14px;border-radius:50%;background:radial-gradient(circle,#e95420 40%,transparent 42%),conic-gradient(#e95420,#f7a072,#e95420);position:relative"><div style="position:absolute;inset:12px;border-radius:50%;background:var(--win-bg)"></div></div>
-        <div style="font-size:26px;font-weight:300">ubuntu studio <b style="color:var(--accent);font-weight:700">plasma</b> web 2.0 LTS</div>
+        <div style="width:80px;height:80px;margin:0 auto 14px;border-radius:50%;background:radial-gradient(circle,#3daee9 40%,transparent 42%),conic-gradient(#3daee9,#8f6ed5,#3daee9);position:relative"><div style="position:absolute;inset:12px;border-radius:50%;background:var(--win-bg)"></div></div>
+        <div style="font-size:26px;font-weight:300">Ubuntu Studio <b style="color:var(--accent);font-weight:700">Plasma</b> Web 2.0 LTS</div>
         <div style="color:var(--text-dim)">A desktop environment that lives in your browser</div>
       </div>
       <h3 style="margin:16px 0 6px">⌨️ Keyboard shortcuts</h3>
