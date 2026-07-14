@@ -363,17 +363,18 @@ const el=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const uid=()=>'id'+Math.random().toString(36).slice(2,9);
 const pad=n=>String(n).padStart(2,'0');
+const PANEL_POPUP_OFFSET='54px';
 
 const DEFAULT_STATE={
   settings:{theme:'dark',accent:'blue',wallpaper:'breeze',volume:70,user:'Astra Nova'},
 };
 const STATE_KEY='ubuntustudio_plasma_v3';
+// Migration keys are ordered newest-to-oldest so the newest available legacy data wins.
 const OLD_STATE_KEYS=['ubuntuweb_v2'];
 let STATE=load();
 function load(){try{
   const raw=localStorage.getItem(STATE_KEY)||OLD_STATE_KEYS.map(k=>localStorage.getItem(k)).find(Boolean);
   const s=raw&&JSON.parse(raw);
-  if(s&&s.settings&&s.settings.wallpaper==='plasma')s.settings.wallpaper='breeze';
   if(s&&!localStorage.getItem(STATE_KEY))localStorage.setItem(STATE_KEY,JSON.stringify(s));
   return s?s:structuredClone(DEFAULT_STATE);
 }catch(e){return structuredClone(DEFAULT_STATE);}}
@@ -381,6 +382,7 @@ function save(){localStorage.setItem(STATE_KEY,JSON.stringify(STATE));}
 
 /* ---- Virtual filesystem ---- */
 const FS_KEY='ubuntustudio_plasma_fs_v3';
+// Migration keys are ordered newest-to-oldest so the newest available legacy files win.
 const OLD_FS_KEYS=['ubuntuweb_fs_v2'];
 function defaultFS(){
   return {type:'dir',children:{
@@ -437,7 +439,7 @@ const WALLPAPERS={
   breeze:"radial-gradient(ellipse 80% 60% at 70% 25%,#3daee9 0%,transparent 48%),radial-gradient(ellipse 90% 70% at 20% 80%,#8f6ed5 0%,transparent 52%),linear-gradient(135deg,#08131f 0%,#14243a 48%,#241a42 100%)",
   studio:"radial-gradient(circle at 80% 20%,#5e81ff 0%,transparent 42%),radial-gradient(circle at 18% 72%,#7b2cbf 0%,transparent 44%),linear-gradient(160deg,#06152b 0%,#102a43 55%,#1b1035 100%)",
   aurora:"radial-gradient(ellipse 120% 80% at 70% 20%,#3a0f4d 0%,transparent 55%),radial-gradient(ellipse 100% 70% at 20% 80%,#7d2b1d 0%,transparent 50%),linear-gradient(135deg,#1a0a2e 0%,#2d1b3d 40%,#4a1e3a 100%)",
-  jelly:"radial-gradient(circle at 75% 30%,#3daee9 0%,transparent 40%),radial-gradient(circle at 25% 75%,#8f6ed5 0%,transparent 45%),linear-gradient(160deg,#07131e 0%,#14253d 50%,#100d22 100%)",
+  jelly:"radial-gradient(circle at 75% 30%,#e95420 0%,transparent 40%),radial-gradient(circle at 25% 75%,#772953 0%,transparent 45%),linear-gradient(160deg,#2c001e 0%,#4a0e2e 50%,#1a0014 100%)",
   ocean:"radial-gradient(ellipse at 30% 20%,#00b4d8 0%,transparent 50%),linear-gradient(180deg,#03045e 0%,#0077b6 60%,#00b4d8 100%)",
   forest:"radial-gradient(ellipse at 70% 80%,#52b788 0%,transparent 50%),linear-gradient(160deg,#081c15 0%,#1b4332 50%,#2d6a4f 100%)",
   sunset:"linear-gradient(180deg,#2b1055 0%,#7597de 35%,#ff8c42 70%,#ffd194 100%)",
@@ -1511,7 +1513,7 @@ document.addEventListener('click',e=>{
    PLASMA PANEL: clock, calendar, system menu
    ========================================================================= */
 function buildCalendar(){
-  const p=$('#cal-popup');p.style.right='10px';p.style.left='auto';p.style.top='auto';p.style.bottom='54px';p.style.transform='none';p.style.minWidth='320px';
+  const p=$('#cal-popup');p.style.right='10px';p.style.left='auto';p.style.top='auto';p.style.bottom=PANEL_POPUP_OFFSET;p.style.transform='none';p.style.minWidth='320px';
   const now=new Date();const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
   const y=now.getFullYear(),m=now.getMonth();const first=new Date(y,m,1).getDay();const days=new Date(y,m+1,0).getDate();
   let cells='';for(let i=0;i<first;i++)cells+='<span></span>';
@@ -1531,7 +1533,7 @@ function buildCalendar(){
     <div class="pop-row" id="cal-nonotif" style="justify-content:center;color:var(--text-faint);font-size:13px">No new notifications</div>`;
 }
 function buildSysMenu(){
-  const p=$('#sys-popup');p.style.right='8px';p.style.top='auto';p.style.bottom='54px';p.style.minWidth='300px';
+  const p=$('#sys-popup');p.style.right='8px';p.style.top='auto';p.style.bottom=PANEL_POPUP_OFFSET;p.style.minWidth='300px';
   p.innerHTML=`
     <div class="pop-slider"><span style="width:22px">🔊</span><input type="range" id="sys-vol" min="0" max="100" value="${STATE.settings.volume}"><span id="sys-volv" style="width:40px;text-align:right;font-size:12px;font-family:var(--mono)">${STATE.settings.volume}%</span></div>
     <div class="pop-slider"><span style="width:22px">🔆</span><input type="range" id="sys-bright" min="20" max="100" value="100"></div>
