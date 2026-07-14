@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Ubuntu Studio Plasma Web OS</title>
+<title>Ubuntu Studio Web OS (Plasma)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -365,22 +365,23 @@ const uid=()=>'id'+Math.random().toString(36).slice(2,9);
 const pad=n=>String(n).padStart(2,'0');
 
 const DEFAULT_STATE={
-  settings:{theme:'dark',accent:'blue',wallpaper:'plasma',volume:70,user:'Astra Nova'},
+  settings:{theme:'dark',accent:'blue',wallpaper:'breeze',volume:70,user:'Astra Nova'},
 };
-const STATE_KEY='ubuntustudio_plasma_v1';
-const OLD_STATE_KEY='ubuntuweb_v2';
+const STATE_KEY='ubuntustudio_plasma_v3';
+const OLD_STATE_KEYS=['ubuntustudio_plasma_v1','ubuntuweb_v2'];
 let STATE=load();
 function load(){try{
-  const raw=localStorage.getItem(STATE_KEY)||localStorage.getItem(OLD_STATE_KEY);
+  const raw=localStorage.getItem(STATE_KEY)||OLD_STATE_KEYS.map(k=>localStorage.getItem(k)).find(Boolean);
   const s=raw&&JSON.parse(raw);
+  if(s&&s.settings&&s.settings.wallpaper==='plasma')s.settings.wallpaper='breeze';
   if(s&&!localStorage.getItem(STATE_KEY))localStorage.setItem(STATE_KEY,JSON.stringify(s));
   return s?s:structuredClone(DEFAULT_STATE);
 }catch(e){return structuredClone(DEFAULT_STATE);}}
 function save(){localStorage.setItem(STATE_KEY,JSON.stringify(STATE));}
 
 /* ---- Virtual filesystem ---- */
-const FS_KEY='ubuntustudio_plasma_fs_v1';
-const OLD_FS_KEY='ubuntuweb_fs_v2';
+const FS_KEY='ubuntustudio_plasma_fs_v3';
+const OLD_FS_KEYS=['ubuntustudio_plasma_fs_v1','ubuntuweb_fs_v2'];
 function defaultFS(){
   return {type:'dir',children:{
     home:{type:'dir',children:{
@@ -406,7 +407,7 @@ function defaultFS(){
 }
 let FS=loadFS();
 function loadFS(){try{
-  const raw=localStorage.getItem(FS_KEY)||localStorage.getItem(OLD_FS_KEY);
+  const raw=localStorage.getItem(FS_KEY)||OLD_FS_KEYS.map(k=>localStorage.getItem(k)).find(Boolean);
   const s=raw&&JSON.parse(raw);
   if(s&&!localStorage.getItem(FS_KEY))localStorage.setItem(FS_KEY,JSON.stringify(s));
   return s||defaultFS();
@@ -433,9 +434,9 @@ function svgArt(kind){
    WALLPAPERS
    ========================================================================= */
 const WALLPAPERS={
-  plasma:"radial-gradient(ellipse 80% 60% at 70% 25%,#3daee9 0%,transparent 48%),radial-gradient(ellipse 90% 70% at 20% 80%,#8f6ed5 0%,transparent 52%),linear-gradient(135deg,#08131f 0%,#14243a 48%,#241a42 100%)",
+  breeze:"radial-gradient(ellipse 80% 60% at 70% 25%,#3daee9 0%,transparent 48%),radial-gradient(ellipse 90% 70% at 20% 80%,#8f6ed5 0%,transparent 52%),linear-gradient(135deg,#08131f 0%,#14243a 48%,#241a42 100%)",
   studio:"radial-gradient(circle at 80% 20%,#5e81ff 0%,transparent 42%),radial-gradient(circle at 18% 72%,#7b2cbf 0%,transparent 44%),linear-gradient(160deg,#06152b 0%,#102a43 55%,#1b1035 100%)",
-  aurora:"radial-gradient(ellipse 120% 80% at 70% 20%,#3a0f4d 0%,transparent 55%),radial-gradient(ellipse 100% 70% at 20% 80%,#1d5f7d 0%,transparent 50%),linear-gradient(135deg,#071421 0%,#18253d 40%,#251e4a 100%)",
+  aurora:"radial-gradient(ellipse 120% 80% at 70% 20%,#3a0f4d 0%,transparent 55%),radial-gradient(ellipse 100% 70% at 20% 80%,#7d2b1d 0%,transparent 50%),linear-gradient(135deg,#1a0a2e 0%,#2d1b3d 40%,#4a1e3a 100%)",
   jelly:"radial-gradient(circle at 75% 30%,#3daee9 0%,transparent 40%),radial-gradient(circle at 25% 75%,#8f6ed5 0%,transparent 45%),linear-gradient(160deg,#07131e 0%,#14253d 50%,#100d22 100%)",
   ocean:"radial-gradient(ellipse at 30% 20%,#00b4d8 0%,transparent 50%),linear-gradient(180deg,#03045e 0%,#0077b6 60%,#00b4d8 100%)",
   forest:"radial-gradient(ellipse at 70% 80%,#52b788 0%,transparent 50%),linear-gradient(160deg,#081c15 0%,#1b4332 50%,#2d6a4f 100%)",
@@ -862,7 +863,7 @@ function appTerminal(startCwd){
         clear:()=>{out.innerHTML='';},
         whoami:()=>print('astra'),
         date:()=>print(new Date().toString()),
-        uname:()=>print('Linux ubuntustudio-plasma 6.17.0-web #1 SMP x86_64 GNU/Linux'),
+        uname:()=>print('Linux studioplasma 6.17.0-web #1 SMP x86_64 GNU/Linux'),
         history:()=>print(hist.map((h,i)=>`  ${i+1}  ${escapeHtml(h)}`).join('<br>')),
         open:()=>{const map={files:'files',dolphin:'files',terminal:'terminal',browser:'browser',firefox:'browser',editor:'editor',gedit:'editor',kate:'editor',code:'code',calc:'calc',calculator:'calc',music:'music',gallery:'gallery',monitor:'monitor',camera:'camera',mines:'mines',minesweeper:'mines',settings:'settings',paint:'paint',software:'software',discover:'software'};
           if(map[arg]){launch(map[arg]);print(`Launching ${arg}…`);}else print(`<span style="color:#ef2929">open: app '${arg}' not found</span>`);},
@@ -1190,7 +1191,7 @@ function appCode(){
         <div style="height:26px;background:#3daee9;display:flex;align-items:center;padding:0 14px;font-size:12px;color:#fff;gap:18px"><span>⎇ main</span><span id="cd-info">UTF-8</span><span style="flex:1"></span><span id="cd-run" style="cursor:pointer">▶ Run HTML</span></div>
       </div>`;
     const sample={
-      'index.html':'<!DOCTYPE html>\n<html>\n<head>\n  <title>My Page</title>\n  <style>\n    body{font-family:sans-serif;background:#1a0a2e;color:#fff;\n         display:grid;place-items:center;height:100vh;margin:0}\n    h1{color:#e95420}\n  </style>\n</head>\n<body>\n  <div>\n    <h1>Hello from Ubuntu Studio Plasma Web! 🎛️</h1>\n    <p>Edit me and hit Run.</p>\n  </div>\n</body>\n</html>',
+      'index.html':'<!DOCTYPE html>\n<html>\n<head>\n  <title>My Page</title>\n  <style>\n    body{font-family:sans-serif;background:#1a0a2e;color:#fff;\n         display:grid;place-items:center;height:100vh;margin:0}\n    h1{color:#3daee9}\n  </style>\n</head>\n<body>\n  <div>\n    <h1>Hello from Ubuntu Studio Plasma Web! 🎛️</h1>\n    <p>Edit me and hit Run.</p>\n  </div>\n</body>\n</html>',
       'app.js':'// A tiny script\nfunction greet(name){\n  return `Hello, ${name}!`;\n}\nconsole.log(greet("world"));\n\nconst nums = [1,2,3,4,5];\nconst sum = nums.reduce((a,b)=>a+b, 0);\nconsole.log("Sum:", sum);',
       'style.css':'body {\n  margin: 0;\n  font-family: Ubuntu, sans-serif;\n}\n.card {\n  border-radius: 12px;\n  box-shadow: 0 4px 20px rgba(0,0,0,.2);\n}',
     };
@@ -1427,7 +1428,7 @@ function appSettings(tab){
           </div>
           <button class="tbtn" id="set-reset" style="margin-top:20px;color:var(--red)">⚠️ Reset OS (wipe all files & settings)</button>`;
         $('#set-user',sb).onchange=e=>{STATE.settings.user=e.target.value||'User';save();};
-        $('#set-reset',sb).onclick=()=>{if(confirm('This will erase ALL your files, photos and settings. Continue?')){[FS_KEY,OLD_FS_KEY,STATE_KEY,OLD_STATE_KEY].forEach(k=>localStorage.removeItem(k));location.reload();}};
+        $('#set-reset',sb).onclick=()=>{if(confirm('This will erase ALL your files, photos and settings. Continue?')){[FS_KEY,STATE_KEY,...OLD_FS_KEYS,...OLD_STATE_KEYS].forEach(k=>localStorage.removeItem(k));location.reload();}};
       }
       else if(s==='about'){
         sb.innerHTML=`<h2 style="font-weight:500;margin-bottom:20px">About</h2>
