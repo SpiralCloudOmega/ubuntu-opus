@@ -1,10 +1,10 @@
-# 🐧 UbuntuWeb OS
+# 🎛️ Ubuntu Studio Plasma Web OS
 
-> A complete Ubuntu/GNOME-style Linux desktop environment that runs entirely in a single HTML file — no build step, no server, no dependencies.
+> A complete Ubuntu Studio/KDE Plasma-style Linux desktop environment that runs entirely in a single HTML file — no build step, no server, no dependencies.
 
 An experiment in seeing how far a single prompt to **Claude Opus 4.8** could go: build a believable, genuinely *functional* web operating system in one self-contained `.html` file you can just open in Chrome.
 
-The result is a full desktop shell — boot splash, login screen, top bar, dock, window manager — plus **15 working applications**, a persistent virtual filesystem, live system graphs, a Web-Audio music synth, and a real webcam app. Everything is vanilla HTML/CSS/JavaScript in **one file (~1,400 lines)**.
+The result is a full desktop shell — boot splash, login screen, Plasma panel, launcher, window manager — plus **15 working applications**, a persistent virtual filesystem, live system graphs, a Web-Audio music synth, and a real webcam app. Everything is vanilla HTML/CSS/JavaScript in **one file (~1,400 lines)**.
 
 ![Desktop screenshot](docs/desktop.png)
 
@@ -27,11 +27,11 @@ At the login screen, **press Enter** (no password needed) to reach the desktop.
 
 ## 🖥️ What's inside
 
-### The shell (real GNOME/Ubuntu feel)
+### The shell (Ubuntu Studio / KDE Plasma feel)
 - Animated **boot splash** → **login screen** with live clock → fade into the desktop
-- GNOME **top bar** — Activities, live date/clock with a **calendar dropdown**, system tray with Wi-Fi / Bluetooth / brightness / volume toggles, and a **battery that actually drains and charges**
-- Ubuntu **dock** — hover-scale, running-app indicator dots, tooltips, "Show Applications" grid
-- **Activities overview** (`Super` key) — live window thumbnails + searchable app grid
+- KDE Plasma-style **bottom panel** — launcher, task manager, live date/clock with a **calendar dropdown**, system tray with Wi-Fi / Bluetooth / brightness / volume toggles, and a **battery that actually drains and charges**
+- Plasma **task manager** — pinned apps, running-app indicators, tooltips, and an application launcher
+- **Application Launcher** (`Super` key) — live window thumbnails + searchable app grid
 - **Window manager** — drag, 8-way resize, minimize / maximize / close, focus z-ordering, **edge-snapping** (drag to top/left/right halves), double-click titlebar to maximize
 - Right-click desktop **context menu**, toast **notifications**, and **lock / power** screens
 
@@ -39,8 +39,8 @@ At the login screen, **press Enter** (no password needed) to reach the desktop.
 | App | What it does |
 | --- | --- |
 | 🖥️ **Terminal** | Real command interpreter over the live filesystem: `ls cd cat echo mkdir touch rm pwd edit open neofetch cowsay history` + tab-completion, history, and easter eggs (`matrix`, `barrelroll`, `sudo`) |
-| 📁 **Files** | Nautilus-style browser — create / rename / delete, back/forward/up, sidebar places, opens files in the right app |
-| 📝 **Text Editor** | Open, edit and save files to the persistent filesystem |
+| 📁 **Dolphin** | KDE-style file browser — create / rename / delete, back/forward/up, sidebar places, opens files in the right app |
+| 📝 **Kate** | Open, edit and save files to the persistent filesystem |
 | 🧑‍💻 **Code** | VS Code-style editor with explorer, tabs, line numbers and a live HTML **Run** preview |
 | 🧮 **Calculator** | Keyboard-driven, full expression evaluation |
 | 📊 **System Monitor** | Live animated CPU / RAM / Network / Disk canvas graphs + process list |
@@ -50,7 +50,7 @@ At the login screen, **press Enter** (no password needed) to reach the desktop.
 | 🎨 **Paint** | Brush, eraser, colors, sizes; exports PNGs to disk |
 | 🌐 **Firefox** | Internal pages (start page, search, wiki) + sandboxed real-site frames |
 | 💣 **Minesweeper** | Complete game with flags, timer and first-click safety |
-| 🛍️ **Software Center** | Browse and "install" apps with progress |
+| 🛍️ **Discover** | Browse and "install" creative apps with progress |
 | ⚙️ **Settings** | Themes, **7 accent colors** & **7 wallpapers** that re-theme the whole UI live |
 | ❓ **Help** | Shortcuts and a guided tour |
 
@@ -58,9 +58,9 @@ At the login screen, **press Enter** (no password needed) to reach the desktop.
 - The **Ubuntu font** (loaded from Google Fonts) for authenticity
 - Film-grain + vignette overlay on the wallpaper
 - **Dark / light themes** and accent colors that recolor the *entire* UI instantly
-- A working `neofetch` complete with the Ubuntu ASCII logo
+- A working `neofetch` with Ubuntu Studio Plasma system details
 - Files, photos and drawings that **survive a page reload** (stored in `localStorage`)
-- Keyboard shortcuts: `Super` (overview), `Ctrl+Alt+T` (terminal), `Super+E` (files), `Super+D` (show desktop), `Alt+Tab` (cycle windows), `Esc` (close menus)
+- Keyboard shortcuts: `Super` (launcher), `Ctrl+Alt+T` (terminal), `Super+E` (files), `Super+D` (show desktop), `Alt+Tab` (cycle windows), `Esc` (close menus)
 
 ---
 
@@ -68,9 +68,9 @@ At the login screen, **press Enter** (no password needed) to reach the desktop.
 
 | Shortcut | Action |
 | --- | --- |
-| `Super` | Activities overview |
+| `Super` | Application Launcher |
 | `Ctrl+Alt+T` | Open Terminal |
-| `Super+E` | Open Files |
+| `Super+E` | Open Dolphin |
 | `Super+D` | Minimize all windows |
 | `Alt+Tab` | Cycle windows |
 | `Esc` | Close overview / menus |
