@@ -363,13 +363,15 @@ const el=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const uid=()=>'id'+Math.random().toString(36).slice(2,9);
 const pad=n=>String(n).padStart(2,'0');
-const PANEL_POPUP_OFFSET='54px';
+const PANEL_HEIGHT=46;
+const PANEL_POPUP_GAP=8;
+const PANEL_POPUP_OFFSET=(PANEL_HEIGHT+PANEL_POPUP_GAP)+'px';
 
 const DEFAULT_STATE={
   settings:{theme:'dark',accent:'blue',wallpaper:'breeze',volume:70,user:'Astra Nova'},
 };
 const STATE_KEY='ubuntustudio_plasma_v3';
-// Migration keys are ordered newest-to-oldest so the newest available legacy data wins.
+// Additional legacy keys should be appended newest-to-oldest.
 const OLD_STATE_KEYS=['ubuntuweb_v2'];
 let STATE=load();
 function load(){try{
@@ -382,7 +384,7 @@ function save(){localStorage.setItem(STATE_KEY,JSON.stringify(STATE));}
 
 /* ---- Virtual filesystem ---- */
 const FS_KEY='ubuntustudio_plasma_fs_v3';
-// Migration keys are ordered newest-to-oldest so the newest available legacy files win.
+// Additional legacy keys should be appended newest-to-oldest.
 const OLD_FS_KEYS=['ubuntuweb_fs_v2'];
 function defaultFS(){
   return {type:'dir',children:{
