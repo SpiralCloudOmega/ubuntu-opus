@@ -60,7 +60,7 @@ At the login screen, **press Enter** (no password needed) to reach the desktop.
 - **Dark / light themes** and accent colors that recolor the *entire* UI instantly
 - A working `neofetch` with Ubuntu Studio Plasma system details
 - Files, photos and drawings that **survive a page reload** (stored in `localStorage`)
-- Keyboard shortcuts: `Super` (launcher), `Ctrl+Alt+T` (terminal), `Super+E` (files), `Super+D` (show desktop), `Alt+Tab` (cycle windows), `Esc` (close menus)
+- Keyboard shortcuts: `Super` (launcher), `Ctrl+Alt+T` (terminal), `Super+E` (Dolphin), `Super+D` (show desktop), `Alt+Tab` (cycle windows), `Esc` (close menus)
 
 ---
 
@@ -73,7 +73,7 @@ At the login screen, **press Enter** (no password needed) to reach the desktop.
 | `Super+E` | Open Dolphin |
 | `Super+D` | Minimize all windows |
 | `Alt+Tab` | Cycle windows |
-| `Esc` | Close overview / menus |
+| `Esc` | Close launcher / menus |
 
 ---
 

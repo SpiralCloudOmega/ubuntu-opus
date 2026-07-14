@@ -686,7 +686,7 @@ function renderOverview(){
 $('#ov-input').addEventListener('input',()=>{if(ovTab==='win'){ovTab='apps';}renderOverview();});
 $$('.ov-tab').forEach(t=>t.onclick=()=>{ovTab=t.dataset.tab;renderOverview();});
 $('#overview').addEventListener('click',e=>{if(e.target.id==='overview')$('#overview').classList.remove('show');});
-$('#tb-activities').onclick=()=>toggleOverview('win');
+$('#tb-activities').onclick=()=>toggleOverview('apps');
 
 /* =========================================================================
    APPLICATIONS
@@ -1620,7 +1620,7 @@ function matrixRain(){
    ========================================================================= */
 addEventListener('keydown',e=>{
   if($('#boot').style.display!=='none'||$('#login').style.display!=='none')return;
-  if(e.key==='Meta'||e.key==='OS'){e.preventDefault();toggleOverview('win');}
+  if(e.key==='Meta'||e.key==='OS'){e.preventDefault();toggleOverview('apps');}
   if(e.ctrlKey&&e.altKey&&e.key.toLowerCase()==='t'){e.preventDefault();appTerminal();}
   if(e.metaKey&&e.key.toLowerCase()==='e'){e.preventDefault();appFiles(HOME);}
   if(e.metaKey&&e.key.toLowerCase()==='d'){e.preventDefault();$$('.win').forEach(w=>{if(w.dataset.min!=='1')minWin(w);});}
