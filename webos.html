@@ -367,12 +367,20 @@ const pad=n=>String(n).padStart(2,'0');
 const DEFAULT_STATE={
   settings:{theme:'dark',accent:'blue',wallpaper:'plasma',volume:70,user:'Astra Nova'},
 };
+const STATE_KEY='ubuntustudio_plasma_v1';
+const OLD_STATE_KEY='ubuntuweb_v2';
 let STATE=load();
-function load(){try{const s=JSON.parse(localStorage.getItem('ubuntustudio_plasma_v1'));return s?s:structuredClone(DEFAULT_STATE);}catch(e){return structuredClone(DEFAULT_STATE);}}
-function save(){localStorage.setItem('ubuntustudio_plasma_v1',JSON.stringify(STATE));}
+function load(){try{
+  const raw=localStorage.getItem(STATE_KEY)||localStorage.getItem(OLD_STATE_KEY);
+  const s=raw&&JSON.parse(raw);
+  if(s&&!localStorage.getItem(STATE_KEY))localStorage.setItem(STATE_KEY,JSON.stringify(s));
+  return s?s:structuredClone(DEFAULT_STATE);
+}catch(e){return structuredClone(DEFAULT_STATE);}}
+function save(){localStorage.setItem(STATE_KEY,JSON.stringify(STATE));}
 
 /* ---- Virtual filesystem ---- */
 const FS_KEY='ubuntustudio_plasma_fs_v1';
+const OLD_FS_KEY='ubuntuweb_fs_v2';
 function defaultFS(){
   return {type:'dir',children:{
     home:{type:'dir',children:{
@@ -397,7 +405,12 @@ function defaultFS(){
   }};
 }
 let FS=loadFS();
-function loadFS(){try{const s=JSON.parse(localStorage.getItem(FS_KEY));return s||defaultFS();}catch(e){return defaultFS();}}
+function loadFS(){try{
+  const raw=localStorage.getItem(FS_KEY)||localStorage.getItem(OLD_FS_KEY);
+  const s=raw&&JSON.parse(raw);
+  if(s&&!localStorage.getItem(FS_KEY))localStorage.setItem(FS_KEY,JSON.stringify(s));
+  return s||defaultFS();
+}catch(e){return defaultFS();}}
 function saveFS(){localStorage.setItem(FS_KEY,JSON.stringify(FS));}
 function resolve(path){
   const parts=path.split('/').filter(Boolean);let node=FS;
@@ -1414,7 +1427,7 @@ function appSettings(tab){
           </div>
           <button class="tbtn" id="set-reset" style="margin-top:20px;color:var(--red)">⚠️ Reset OS (wipe all files & settings)</button>`;
         $('#set-user',sb).onchange=e=>{STATE.settings.user=e.target.value||'User';save();};
-        $('#set-reset',sb).onclick=()=>{if(confirm('This will erase ALL your files, photos and settings. Continue?')){localStorage.removeItem(FS_KEY);localStorage.removeItem('ubuntustudio_plasma_v1');location.reload();}};
+        $('#set-reset',sb).onclick=()=>{if(confirm('This will erase ALL your files, photos and settings. Continue?')){[FS_KEY,OLD_FS_KEY,STATE_KEY,OLD_STATE_KEY].forEach(k=>localStorage.removeItem(k));location.reload();}};
       }
       else if(s==='about'){
         sb.innerHTML=`<h2 style="font-weight:500;margin-bottom:20px">About</h2>
